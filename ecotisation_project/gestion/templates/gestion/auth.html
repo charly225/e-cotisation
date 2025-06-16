@@ -28,22 +28,25 @@
     }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-slate-50">
 
-  <div class="auth-container bg-white rounded-xl w-full max-w-md overflow-hidden">
+  <div class="auth-container bg-white rounded-xl w-full max-w-md mx-auto sm:mx-6 md:mx-0 overflow-hidden">
 
     <!-- Logo -->
     <div class="px-8 pt-8">
       <div class="flex items-center space-x-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-        </svg>
-        <span class="text-2xl font-bold text-gray-800">e-Cotisation</span>
+        <a href="{% url 'accueil' %}" class="flex-shrink-0">
+          {% if logo_actif %}
+            <img src="{{ logo_actif.image.url }}" alt="{{ logo_actif.nom }}" class="h-8 sm:h-10 w-auto transition-all duration-300 hover:scale-105">
+          {% else %}
+            <img src="{% static 'gestion/assets/logo.svg' %}" alt="logo par défaut" class="h-8 sm:h-10 w-auto">
+          {% endif %}
+        </a>
       </div>
     </div>
 
     <!-- Tabs -->
-    <div class="flex border-b border-gray-200 px-8 pt-6">
+    <div class="flex flex-wrap gap-x-4 border-b border-gray-200 px-4 sm:px-6 pt-4 sm:pt-6">
       <button class="tab-underline active pb-4 px-1 mr-6 font-medium text-sm text-gray-900" onclick="switchTab('login')">Connexion</button>
       <button class="tab-underline pb-4 px-1 font-medium text-sm text-gray-500 hover:text-gray-700" onclick="switchTab('register')">Inscription</button>
     </div>

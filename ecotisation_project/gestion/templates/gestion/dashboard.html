@@ -25,6 +25,11 @@
         transform: translateY(-2px);
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
       }
+      @media (max-width: 400px) {
+        .stat-card {
+          padding: 1rem !important;
+        }
+      }
       @keyframes spin {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
@@ -62,26 +67,26 @@
   </head>
   <body class="bg-soft-white">
     <header class="bg-white border-b border-border py-6">
-      <div class="container mx-auto px-4 flex justify-between items-center">
+      <div class="container mx-auto px-4 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
         <div>
           <h1 class="text-3xl font-bold text-deep-blue">Bonjour, {{ user.membre.nom }} {{ user.membre.prenom }}</h1>
           <p class="text-muted-foreground">Votre impact solidaire en temps réel</p>
         </div>
-        <div class="flex items-center flex-row-reverse gap-4">
-          <form method="post" action="{% url 'logout' %}">
+        <div class="flex flex-col-reverse gap-2 sm:flex-row sm:items-center sm:gap-4 w-full sm:w-auto">
+          <form method="post" action="{% url 'logout' %}" class="w-full sm:w-auto">
             {% csrf_token %}
-            <button type="submit" class="inline-flex items-center px-4 py-2 text-white bg-red-500 hover:bg-red-600 rounded-md transition-colors">
+            <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 text-white bg-red-500 hover:bg-red-600 rounded-md transition-colors">
               🔓 Se déconnecter
             </button>
           </form>
-          <a href="{% url 'effectuer_paiement' %}" class="inline-flex items-center bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90">
+          <a href="{% url 'effectuer_paiement' %}" class="w-full sm:w-auto inline-flex items-center justify-center bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" />
               <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" />
             </svg>
             Faire un don
           </a>
-          <a href="{% url 'accueil' %}" class="btn-gradient inline-flex items-center text-white px-4 py-2 rounded-md ">
+          <a href="{% url 'accueil' %}" class="w-full sm:w-auto btn-gradient inline-flex items-center justify-center text-white px-4 py-2 rounded-md">
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
             </svg>
@@ -91,7 +96,7 @@
       </div>
     </header>
 
-    <main class="container mx-auto px-4 py-10">
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {% if cotisation_active and not a_contribue %}
         <div class="mb-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded">
           🎯 Vous n’avez pas encore contribué à la campagne
@@ -101,7 +106,7 @@
           </a>
         </div>
       {% endif %}
-      <div class="grid md:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {% if is_tresorier %}
           <!-- Carte 1 : Total collecté -->
           <div class="stat-card">
@@ -156,7 +161,7 @@
         </p>
       {% endif %}
 
-      <div class="mt-10 grid lg:grid-cols-3 gap-6">
+      <div class="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-6">
         <section id="campagne-section" class="lg:col-span-2">
             <div id="skeleton-loader" class="hidden space-y-4">
               <div class="h-20 bg-gray-200 rounded animate-pulse"></div>
@@ -299,7 +304,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="lucide lucide-heart w-6 h-6 text-primary"
+                class="lucide lucide-heart w-6 h-6 text-red-600"
               >
                 <path
                   d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"

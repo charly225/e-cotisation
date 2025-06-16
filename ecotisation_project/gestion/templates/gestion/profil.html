@@ -21,7 +21,7 @@
 
 <body class="bg-soft-white">
   <header class="bg-white border-b border-border py-6">
-    <div class="container mx-auto px-4 flex justify-between items-center">
+    <div class="container mx-auto px-4 flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center">
       <h1 class="text-3xl font-bold text-deep-blue">Mon profil</h1>
       <a href="{% url 'dashboard' %}" class="text-sm text-primary hover:underline">← Retour au tableau de bord</a>
     </div>
@@ -41,12 +41,12 @@
                       {% else %}ℹ️ Info :
                       {% endif %}
                     </strong>
-                    <span class="block sm:inline">{{ message }}</span>
+                    <span class="block sm:inline text-sm">{{ message }}</span>
                   </div>
                 {% endfor %}
               </div>
             {% endif %}
-    <div class="grid md:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Formulaire infos personnelles -->
       <form method="post" class="bg-white border rounded-lg p-6 shadow-sm space-y-4">
         <h2 class="text-xl font-semibold text-deep-blue">📋 Informations personnelles</h2>
@@ -67,7 +67,7 @@
           <label class="block text-sm font-medium text-gray-700">Email</label>
           {{ profil_form.email }}
         </div>
-        <button type="submit" name="profil_submit" class="btn-gradient text-white px-4 py-2 rounded">
+        <button type="submit" name="profil_submit" class="btn-gradient w-full sm:w-auto text-white px-4 py-2 rounded text-sm font-medium">
           💾 Enregistrer les modifications
         </button>
       </form>
@@ -117,7 +117,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="lucide lucide-heart w-6 h-6 text-primary"
+                class="lucide lucide-heart w-6 h-6 text-red-600"
               >
                 <path
                   d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"

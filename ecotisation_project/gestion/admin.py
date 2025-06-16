@@ -5,9 +5,20 @@ from .models import (
     Membre, Enfant, Cotisation, NiveauScolaire, ObjectifNiveauCotisation,
     ScolariteEnfant, MoyenPaiement, Payement,
     ParametrageCotisation, Role, MembreRoles,
-    Notification, RappelPaiement, MessageAccueil, Temoignage, AppelAction, PointMission, SectionMission
+    Notification, RappelPaiement, MessageAccueil, Temoignage, AppelAction, PointMission, SectionMission, Logo
 )
 
+@admin.register(Logo)
+class LogoAdmin(admin.ModelAdmin):
+    list_display = ['nom', 'actif', 'date_ajout']
+    list_filter = ['actif']
+    search_fields = ['nom']
+
+    def save_model(self, request, obj, form, change):
+        if obj.actif:
+            # Désactive tous les autres logos
+            Logo.objects.update(actif=False)
+        super().save_model(request, obj, form, change)
 class PayementAdminForm(forms.ModelForm):
     class Meta:
         model = Payement

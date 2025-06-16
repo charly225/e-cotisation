@@ -16,6 +16,18 @@ def generate_year_choices(start=2020, end=None):
         (f"{y}-{y+1}", f"{y}-{y+1}")
         for y in range(start, end)
     ]
+class Logo(models.Model):
+    nom = models.CharField(max_length=100, blank=True, help_text="Nom ou description du logo")
+    image = models.ImageField(upload_to='logos/', verbose_name="Fichier logo (SVG, PNG, etc.)")
+    actif = models.BooleanField(default=False, help_text="Définit si ce logo est utilisé actuellement")
+
+    date_ajout = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.nom or f"Logo #{self.pk}"
+
+    class Meta:
+        ordering = ['-actif', '-date_ajout']
 
 class Membre(models.Model):
     nom = models.CharField(max_length=100)

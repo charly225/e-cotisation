@@ -2,7 +2,7 @@
     <!-- Bouton Précédent -->
     {% if temoignages_page.has_previous %}
     <button data-page="{{ temoignages_page.previous_page_number }}"
-       class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50 transition-colors">
+       class="px-3 py-2 text-sm sm:text-base rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50 transition-colors">
         <i class="fas fa-chevron-left"></i>
     </button>
     {% endif %}
@@ -22,7 +22,7 @@
     <!-- Bouton Suivant -->
     {% if temoignages_page.has_next %}
     <button data-page="{{ temoignages_page.next_page_number }}"
-       class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50 transition-colors">
+       class="px-3 py-2 text-sm sm:text-base rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50 transition-colors">
         <i class="fas fa-chevron-right"></i>
     </button>
     {% endif %}

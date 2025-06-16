@@ -1,8 +1,8 @@
 {% load humanize %}
-<div class="p-6 pt-0 space-y-4">
+<div class="p-4 sm:p-6 pt-0 space-y-4">
   {% if paiements %}
     {% for paiement in paiements %}
-      <div class="p-4 bg-white rounded-lg border text-sm">
+      <div class="p-4 bg-white rounded-lg border text-sm space-y-1 sm:space-y-2 w-full">
         <p><strong>Montant :</strong> {{ paiement.montant|intcomma }} FCFA</p>
         <p><strong>Campagne :</strong>
           {% if paiement.cotisation %}

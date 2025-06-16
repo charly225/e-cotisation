@@ -54,6 +54,12 @@
         .custom-gradient {
             background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
         }
+        @media (max-width: 400px) {
+          #back-to-top {
+            right: 1rem;
+            bottom: 1rem;
+          }
+        }
     </style>
   </head>
   <header>
@@ -61,44 +67,46 @@
         <ol tabindex="-1" class="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]"></ol>
       </div>
       <nav class="bg-white/90 backdrop-blur-sm border-b border-border sticky top-0 z-50">
-          <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-8 h-8 text-primary">
-                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
-              </svg><span class="text-2xl font-bold text-deep-blue">e-Cotisation</span>
-            </div>
-            <div class="flex space-x-4">
-              <a href="#notre-mission" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:text-accent-foreground h-10 px-4 py-2 text-deep-blue hover:bg-primary/10">
+          <div class="container mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
+              <a href="{% url 'accueil' %}" class="flex-shrink-0">
+                  {% if logo_actif %}
+                    <img src="{{ logo_actif.image.url }}" alt="{{ logo_actif.nom }}" class="h-8 sm:h-10 w-auto transition-all duration-300 hover:scale-105">
+                  {% else %}
+                    <img src="{% static 'gestion/assets/logo.svg' %}" alt="logo par défaut" class="h-8 sm:h-10 w-auto">
+                  {% endif %}
+              </a>
+            <div class="w-full sm:w-auto flex items-center justify-end space-x-2 sm:space-x-4">
+              <a href="#notre-mission" class="text-sm sm:text-base px-3 py-2 rounded-md hover:bg-primary/10 transition-colors whitespace-nowrap">
                 À propos
               </a>
               {% if user.is_authenticated and user.membre %}
-                <div class="relative">
+                <div class="relative ml-2 sm:ml-0">
                   <!-- Avatar rond avec initiale -->
-                  <button id="user-menu-btn" class="flex items-center space-x-2 rounded-full bg-primary text-white px-4 py-2 font-medium shadow hover:bg-primary/90 transition">
+                  <button id="user-menu-btn" class="flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 rounded-full bg-primary text-white px-3 sm:px-4 py-1 sm:py-2 text-sm sm:text-base font-medium shadow hover:bg-primary/90 transition-all">
                     <span class="uppercase">{{ user.membre.prenom|default:user.username|first|upper }}</span>
-                    <svg id="arrow-icon" class="w-4 h-4 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg id="arrow-icon" class="w-3 h-3 sm:w-4 sm:h-4 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
 
                   <!-- Dropdown -->
-                  <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                    <div class="px-4 py-2 border-b text-sm text-gray-600">
+                  <div id="user-dropdown" class="hidden absolute right-0 mt-1 sm:mt-2 w-40 sm:w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 overflow-hidden">
+                    <div class="px-3 sm:px-4 py-2 border-b text-xs sm:text-sm text-gray-600 truncate">
                       Bonjour, <strong>{{ user.membre.prenom }}</strong>
                     </div>
-                    <a href="{% url 'dashboard' %}" class="block px-4 py-2 text-sm text-blue-600 hover:bg-gray-100">
+                    <a href="{% url 'dashboard' %}" class="block px-3 sm:px-4 py-2 text-xs sm:text-sm text-blue-600 hover:bg-gray-100 truncate">
                        📊 Tableau de bord
                     </a>
                     <form method="post" action="{% url 'logout' %}">
                       {% csrf_token %}
-                      <button type="submit" class="w-full text-left px-4 py-2 text-sm text-white bg-red-500 hover:bg-red-600 rounded-b-md transition-colors border-t border-gray-100">
+                      <button type="submit" class="w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm text-white bg-red-500 hover:bg-red-600 transition-colors border-t border-gray-100">
                         🔓 Se déconnecter
                       </button>
                     </form>
                   </div>
                 </div>
               {% else %}
-                <a href="{% url 'auth' %}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 button-primary">
+                <a href="{% url 'auth' %}" class="text-sm sm:text-base px-3 sm:px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors whitespace-nowrap">
                 Se connecter
                 </a>
               {% endif %}
@@ -107,13 +115,13 @@
       </nav>
   </header>
   <body class="min-h-screen bg-soft-white" >
-        <section class="gradient-hero py-20 px-4" style="background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);">
+        <section class="gradient-hero py-12 sm:py-20 px-4" style="background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);">
           <div class="container mx-auto text-center animate-fade-in">
                 {% if message_accueil %}
-                  <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">
+                  <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6">
                     {{ message_accueil.titre }}
                   </h1>
-                  <p class="text-xl text-white/90 mb-8 max-w-2xl text-white mx-auto">
+                  <p class="text-base sm:text-lg md:text-xl text-white/90 mb-6 sm:mb-8 max-w-2xl mx-auto">
                     {{ message_accueil.sous_titre|safe }}
                   </p>
                 {% else %}
@@ -127,22 +135,22 @@
                   </p>
                 {% endif %}
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="{% url 'auth' %}?tab=register" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 h-11 rounded-md bg-white text-blue-600 hover:bg-white/90 px-8 py-4 text-lg">
+              <a href="{% url 'auth' %}?tab=register" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border bg-white hover:bg-white/10 hover:text-white rounded-md border-white text-blue-600 px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 text-sm sm:text-base md:text-lg h-10 sm:h-11 md:h-12">
                 Rejoindre l'association
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 w-5 h-5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 sm:w-5 sm:h-5 ml-1 inline">
                   <path d="M5 12h14"></path>
                   <path d="m12 5 7 7-7 7"></path>
                 </svg>
               </a>
-              <a href="#notre-mission" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border bg-background hover:text-accent-foreground h-11 rounded-md border-white text-blue-600 hover:bg-white/10 px-8 py-4 text-lg">
+              <a href="#notre-mission" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border bg-white hover:bg-white/10 hover:text-white rounded-md border-white text-blue-600 px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 text-sm sm:text-base md:text-lg h-10 sm:h-11 md:h-12">
                 En savoir plus
               </a>
             </div>
           </div>
         </section>
-        <section class="py-16 px-4 mt-10">
+        <section class="py-8 sm:py-12 md:py-16 px-4">
           <div class="container mx-auto">
-            <div class="grid md:grid-cols-3 gap-6 animate-slide-up">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               <div
                 class="rounded-lg border bg-card text-card-foreground shadow-sm stat-card text-center">
                 <div class="p-6 pt-6">
@@ -280,7 +288,7 @@
                 <div class="text-center mb-12">
                     <h2 class="text-4xl font-bold text-deep-blue mb-4">Témoignages</h2>
                 </div>
-                <div class="grid lg:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                     <!-- FORMULAIRE COMPACT -->
                     <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
                         <h3 class="text-xl font-semibold text-gray-800 mb-6 text-center">
@@ -289,7 +297,7 @@
                         <form method="post" class="space-y-4">
                             {% csrf_token %}
                             <!-- Nom et Lien côte à côte -->
-                            <div class="grid grid-cols-2 gap-3">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div>
                                     <label for="{{ form.nom.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
                                         {{ form.nom.label }}
@@ -635,7 +643,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="lucide lucide-heart w-6 h-6 text-primary"
+                class="lucide lucide-heart w-6 h-6 text-red-600"
               >
                 <path
                   d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
